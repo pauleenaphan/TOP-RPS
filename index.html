@@ -1,59 +1,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Page Title</title>
+    <meta charset="UTF-8">
+    <title>Page Title</title>
 </head>
 <body>
-  <script>
-  
- 	
+    <button onclick = "func1()"> Rock </button>
+    <button onclick = "func2()"> Paper </button>
+    <button onclick = "func3()"> Scissor </button>
+    
+    <div id = container></div>
+    <script>
+        // Your JavaScript goes here!
+        console.log("Hello, World!");
 
-    // Your JavaScript goes here!
-    console.log("Hello, World!");
+        
 
-	//gets random value for the rock paper scissor bot choice
-	function getRandomInt(max) {
-  		return Math.floor(Math.random() * max);
-	}
-
-	//gets computer choice
-    function getComputerChoice(){
-        var result = getRandomInt(3);
-
-        if(result === 0){
-            return("Rock");
-        }else if(result === 1){
-            return("Paper");
-        }else{
-            return("Scissors");
+        //gets random value for the rock paper scissor bot choice
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
         }
-    }
 
-	//rock paper scissor process
-    function playRound(playerSelection, computerSelection){
-        if(playerSelection === computerSelection){
-            return("Tie");
-        }else if((playerSelection === "Rock" && computerSelection === "Scissor") || (playerSelection === "Paper" && computerSelection === "Rock") || (playerSelection === "Scissor" && computerSelection === "Paper")){
-            return("You Win!");
-        }else{
-            return("You Lose!");
+        //gets computer choice
+        function getComputerChoice(){
+            var result = getRandomInt(3);
+
+            if(result === 0){
+                return("Rock");
+            }else if(result === 1){
+                return("Paper");
+            }else{
+                return("Scissor");
+            }
         }
-    }
 
-	//plays the 5 rounds
-	function game(){
-		for(let i = 0; i < 5; i++){
-			let playerSelection = prompt("What is your play here? ");
-			let computerSelection = getComputerChoice();
-			console.log(playRound(playerSelection, computerSelection));
-		}
-	}
+        //prints out the score board that is set to 0
+        const score1 = document.createElement("p");
+        score1.textContent = "Player Score: 0";
+        container.appendChild(score1);
 
+        const score2 = document.createElement("p");
+        score2.textContent = "Computer Score: 0";
+        container.appendChild(score2);
 
+        let playerCount = 0;
+        let compCount = 0;
+        //rock paper scissor process
+        //This does not account for lower case sensivitiy!
+        function playRound(playerSelection, computerSelection){
+            //console.log(playerSelection);
+            //console.log(computerSelection);
+            if(playerSelection === computerSelection){
+                console.log("Tie");
+            }else if((playerSelection === "Rock" && computerSelection === "Scissor") || (playerSelection === "Paper" && computerSelection === "Rock") || (playerSelection === "Scissor" && computerSelection === "Paper")){
+                //if player or computer wins, add their score and update it to the container
+                console.log("You Win!");
+                playerCount += 1;
+                score1.textContent = "Player Score: " + playerCount;
+                container.appendChild(score1);
+            }else{
+                console.log("You Lose!");
+                compCount += 1;
+                score2.textContent = "Computer Score: " + compCount;
+                container.appendChild(score2);
+            }
+            
+            //once a player or computer reaches a score of 5 then send the message
+            if(playerCount === 5 || compCount === 5){
+                const result = document.createElement("h1");
+                if(playerCount === 5){
+                    result.textContent = "WE HAVE A WINNER! PLAYER HAS REACHED 5 POINTS FIRST";
+                    container.appendChild(result);
+                }else{
+                    result.textContent = "WE HAVE A WINNER! COMPUTER HAS REACHED 5 POINTS FIRST";
+                    container.appendChild(result);
+                }
 
-	
+                //resets the score board
+                playerCount = 0;
+                compCount = 0;
 
-  </script>
+                score1.textContent = "Player Score: " + playerCount;
+                container.appendChild(score1);
+
+                score2.textContent = "Computer Score: " + compCount;
+                container.appendChild(score2);
+            } 
+        }
+
+        function func1(){
+            let comp = getComputerChoice();
+            playRound("Rock", comp);
+        }
+        function func2(){
+            let comp = getComputerChoice();
+            playRound("Paper", comp);
+        }
+        function func3(){
+            let comp = getComputerChoice();
+            playRound("Scissor", comp);
+        }
+
+    </script>
 </body>
 </html>
